@@ -27,7 +27,9 @@
             <h1>Who are you playing with?</h1>
             <div class="input-container">
                 <input type="text" id="steamId" placeholder="Enter your Steam ID" class="input">
-                <button id="submitBtn" class="button">Submit</button>
+                <div class="button-group">
+                    <button id="submitBtn" class="button">Submit</button>
+                </div>
                 <p id="error" class="error"></p>
             </div>
         </div>
@@ -36,7 +38,10 @@
     <!-- Features Section -->
     <section id="features" class="features hidden">
         <div class="container">
-            <h2>Hero Information</h2>
+            <div class="features-header">
+                <img id="headerImage" src="">
+                <h2 id="featuresTitle">Hero Information</h2>
+            </div>
             <div id="heroCards" class="cards">
                 <!-- Hero cards will be dynamically inserted here -->
             </div>

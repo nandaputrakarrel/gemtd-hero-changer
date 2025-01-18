@@ -15,11 +15,17 @@ async function getUserProfile(steamId) {
         heroList.push(await heroes.fromData(key, value))
       }
 
+    const steamResponse = await axios.get(
+      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${steamId}`
+    )
+
     return {
       success: true,
       currentHero: await heroes.fromData(data['onduty_hero']['hero_id'], data['onduty_hero']),
       heroList: heroList,
       playerInformation: {
+        name: steamResponse.data.response.players[0].personaname,
+        avatar: steamResponse.data.response.players[0].avatarfull,
         currency: {
           shell: data.shell,
           iceCube: data.ice,

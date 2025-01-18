@@ -4,9 +4,12 @@ lucide.createIcons();
 // DOM Elements
 const steamIdInput = document.getElementById('steamId');
 const submitBtn = document.getElementById('submitBtn');
+const clearBtn = document.getElementById('clearBtn');
 const errorText = document.getElementById('error');
 const featuresSection = document.getElementById('features');
 const heroCards = document.getElementById('heroCards');
+const featuresTitle = document.getElementById('featuresTitle');
+const headerImage = document.getElementById('headerImage');
 
 // Function to handle hero action
 async function handleHeroAction(steamId, heroId) {
@@ -178,6 +181,9 @@ submitBtn.addEventListener('click', async () => {
     if (result.status === 200 && result.data.heroList) {
       // Clear previous cards
       heroCards.innerHTML = '';
+
+      featuresTitle.textContent = result.data.playerInformation.name || 'Hero Information';
+      headerImage.src = result.data.playerInformation.avatar || '';
       
       // Create and append new cards
       result.data.heroList.forEach(hero => {
@@ -199,3 +205,4 @@ submitBtn.addEventListener('click', async () => {
     submitBtn.textContent = 'Submit';
   }
 });
+
