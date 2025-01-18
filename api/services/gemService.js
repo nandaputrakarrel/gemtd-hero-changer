@@ -3,9 +3,6 @@ const axios = require('axios');
 
 const heroes = require('../models/hero')
 
-HEROES_LIST_KEYWORD = 'hero_sea';
-CURRENT_HERO_KEYWORD = 'onduty_hero';
-
 async function getUserProfile(steamId) {
   try {
     const response = await axios.get(
@@ -14,13 +11,13 @@ async function getUserProfile(steamId) {
 
     const data = response.data.data[`${steamId}`];
     const heroList = [];
-      for (const [key,value] of Object.entries(data[HEROES_LIST_KEYWORD])) {
+      for (const [key,value] of Object.entries(data['hero_sea'])) {
         heroList.push(await heroes.fromData(key, value))
       }
 
     return {
       success: true,
-      currentHero: await heroes.fromData(data[CURRENT_HERO_KEYWORD]['hero_id'], data[CURRENT_HERO_KEYWORD]),
+      currentHero: await heroes.fromData(data['onduty_hero']['hero_id'], data['onduty_hero']),
       heroList: heroList,
       playerInformation: {
         currency: {
