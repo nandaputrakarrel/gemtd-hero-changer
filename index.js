@@ -5,6 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const logger = require('morgan');
+const vercelSpeedInsights = require('@vercel/speed-insights');
 
 const app = express();
 
@@ -61,5 +62,7 @@ app.use((err, req, res, next) => {
     message: err.printMsg || 'Something went wrong!',
   });
 });
+
+vercelSpeedInsights.injectSpeedInsights()
 
 module.exports = app;
