@@ -62,3 +62,7 @@ app.use((err, req, res, next) => {
     message: err.printMsg || 'Something went wrong!',
   });
 });
+
+module.exports = {
+  app
+}
