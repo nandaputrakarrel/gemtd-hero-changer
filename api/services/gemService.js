@@ -5,6 +5,17 @@ const heroes = require('../models/hero')
 
 async function getUserProfile(steamId) {
   try {
+    const steamResponse = await axios.get(
+      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${steamId}`
+    )
+
+    if (steamResponse.data.response.players.length < 1) {
+      return {
+        success: false,
+        status: 404
+      }
+    }
+
     const response = await axios.get(
       `${process.env.GEMTD_HOST}/202203/heros/get/@${steamId}?ver=${process.env.GEMTD_VER}&compen_shell=2&pcount=1&award=true`
     );
@@ -14,10 +25,6 @@ async function getUserProfile(steamId) {
       for (const [key,value] of Object.entries(data['hero_sea'])) {
         heroList.push(await heroes.fromData(key, value))
       }
-
-    const steamResponse = await axios.get(
-      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${steamId}`
-    )
 
     return {
       success: true,

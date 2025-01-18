@@ -1,6 +1,7 @@
 const heroes = require('../enums/heroes');
 const effects = require('../enums/effects');
 const potrait = require('../enums/potrait');
+const abilities = require('../enums/abilities');
 
 const ability = require('./ability')
 

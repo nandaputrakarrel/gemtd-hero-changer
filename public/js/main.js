@@ -1,7 +1,5 @@
-// Initialize Lucide icons
 lucide.createIcons();
 
-// DOM Elements
 const steamIdInput = document.getElementById('steamId');
 const submitBtn = document.getElementById('submitBtn');
 const clearBtn = document.getElementById('clearBtn');
@@ -11,7 +9,6 @@ const heroCards = document.getElementById('heroCards');
 const featuresTitle = document.getElementById('featuresTitle');
 const headerImage = document.getElementById('headerImage');
 
-// Function to handle hero action
 async function handleHeroAction(steamId, heroId) {
   try {
     const button = document.querySelector(`button[data-hero="${heroId}"]`);
@@ -41,10 +38,7 @@ async function handleHeroAction(steamId, heroId) {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    const result = await response.json();
     
-    // Show success state
     button.style.backgroundColor = 'var(--success)';
     button.innerHTML = `
       <i data-lucide="check"></i>
@@ -57,7 +51,6 @@ async function handleHeroAction(steamId, heroId) {
       element: button
     });
 
-    // Reset button after 2 seconds
     setTimeout(() => {
       button.style.backgroundColor = '';
       button.disabled = false;
@@ -88,7 +81,6 @@ async function handleHeroAction(steamId, heroId) {
       element: button
     });
 
-    // Reset button after 2 seconds
     setTimeout(() => {
       button.style.backgroundColor = '';
       button.disabled = false;
@@ -106,7 +98,6 @@ async function handleHeroAction(steamId, heroId) {
   }
 }
 
-// Function to create a hero card
 function createHeroCard(hero) {
   const card = document.createElement('div');
   card.className = 'card';
@@ -142,7 +133,6 @@ function createHeroCard(hero) {
     </div>
   `;
   
-  // Initialize Lucide icons for the action button
   lucide.createIcons({
     icons: {
       'wand-2': lucide.icons['wand-2']
@@ -153,7 +143,6 @@ function createHeroCard(hero) {
   return card;
 }
 
-// Handle form submission
 submitBtn.addEventListener('click', async () => {
   const steamId = steamIdInput.value.trim();
   
@@ -162,7 +151,6 @@ submitBtn.addEventListener('click', async () => {
     return;
   }
   
-  // Clear previous error and show loading state
   errorText.textContent = '';
   submitBtn.disabled = true;
   submitBtn.textContent = 'Loading...';
@@ -173,33 +161,34 @@ submitBtn.addEventListener('click', async () => {
     });
     
     if (!response.ok) {
+      if (response.status == 404) {
+        throw new Error("Account not found.")
+      }
+
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     const result = await response.json();
     
-    if (result.status === 200 && result.data.heroList) {
-      // Clear previous cards
+    if (result.data.heroList) {
       heroCards.innerHTML = '';
 
       featuresTitle.textContent = result.data.playerInformation.name || 'Hero Information';
       headerImage.src = result.data.playerInformation.avatar || '';
       
-      // Create and append new cards
       result.data.heroList.forEach(hero => {
         const card = createHeroCard(hero);
         heroCards.appendChild(card);
       });
       
-      // Show the features section
       featuresSection.classList.remove('hidden');
     } else {
-      throw new Error('Invalid response format');
+      throw new Error('Could not process');
     }
     
   } catch (error) {
-    console.error('Error:', error);
-    errorText.textContent = 'Failed to fetch data. Please try again.';
+    errorText.textContent = error.message;
+    featuresSection.classList.add('hidden');
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit';
