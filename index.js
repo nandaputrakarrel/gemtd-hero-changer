@@ -21,10 +21,10 @@ const logFormat = {
 
 app.use(logger(JSON.stringify(logFormat)));
 
-const corsOptions = {
-  origin: ["http://localhost:3000"],
-  methods: ["GET,POST"],
-};
+// const corsOptions = {
+//   origin: ["http://localhost:3000"],
+//   methods: ["GET,POST"],
+// };
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -45,9 +45,9 @@ fs.readdirSync(__dirname + '/api/routes').filter((file) => {
 });
 
 const defaultPort = process.env.PORT || 3001;
-app.listen(defaultPort, () => {
-  console.log(`GemTD Updater started at port : ${defaultPort}`);
-});
+// app.listen(defaultPort, () => {
+//   console.log(`GemTD Updater started at port : ${defaultPort}`);
+// });
 
 // Error handler
 app.use((err, req, res, next) => {
@@ -63,6 +63,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = {
-  app
-}
+module.exports = app;
