@@ -2,10 +2,10 @@
   "name": "gemtdheropicker",
   "version": "1.0.0",
   "description": "Backend to pick hero for Dota 2 GemTD",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.js",
-    "prod": "node ./src/index.js"
+    "dev": "nodemon index.js",
+    "prod": "node /index.js"
   },
   "author": "Gravity",
   "license": "ISC",

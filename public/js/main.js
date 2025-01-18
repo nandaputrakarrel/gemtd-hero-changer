@@ -24,7 +24,7 @@ async function handleHeroAction(steamId, heroId) {
       element: button
     });
 
-    const response = await fetch('/gem/set', {
+    const response = await fetch('/api/gem/set', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -165,7 +165,7 @@ submitBtn.addEventListener('click', async () => {
   submitBtn.textContent = 'Loading...';
   
   try {
-    const response = await fetch(`/gem/${steamId}`, {
+    const response = await fetch(`/api/gem/${steamId}`, {
       method: 'GET'
     });
     

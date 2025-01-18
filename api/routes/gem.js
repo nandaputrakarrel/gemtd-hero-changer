@@ -3,10 +3,10 @@ const router = express.Router();
 const {handlerException} = require('../exceptions/handler');
 const controller = require('../controllers/gemController');
 
-router.get('/gem/:steamId',
+router.get('/api/gem/:steamId',
     handlerException(controller.getUserProfile));
 
-router.post('/gem/set',
+router.post('/api/gem/set',
     handlerException(controller.setHero));
 
 module.exports = router;

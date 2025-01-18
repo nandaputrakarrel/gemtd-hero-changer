@@ -32,16 +32,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors(corsOptions));
 app.use(express.json({limit: '1mb'}));
 app.use(express.urlencoded({limit: '1mb', extended: true}));
-app.use(express.static('src/public'));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-fs.readdirSync(__dirname + '/app/routes').filter((file) => {
+fs.readdirSync(__dirname + '/api/routes').filter((file) => {
   return file.toLowerCase().endsWith('.js');
 }).forEach((eachFile) => {
-  app.use('/', require(__dirname + '/app/routes/' + eachFile));
+  app.use('/', require(__dirname + '/api/routes/' + eachFile));
 });
 
 const defaultPort = process.env.PORT || 3000;
