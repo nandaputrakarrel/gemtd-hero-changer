@@ -12,7 +12,8 @@ async function fromData(id, data) {
   return {
     hero: heroes[id],
     effect: data.effect ? effects[data.effect] : null,
-    abilities: heroAbilities
+    abilities: heroAbilities,
+    heroImage: `https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/${heroes[id].toLowerCase().replace(/\s/g, '')}.png`
   }
 }
 

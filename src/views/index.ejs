@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam ID Checker</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-background">
+    <!-- Header -->
+    <header class="border-b">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i data-lucide="gamepad-2"></i>
+                    <span>Gem TD Hero Changer</span>
+                </div>
+                <a href='https://ko-fi.com/Z8Z3195OPM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> 
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Steam ID Checker</h1>
+            <div class="input-container">
+                <h2>Input Steam ID</h2>
+                <input type="text" id="steamId" placeholder="Enter your Steam ID" class="input">
+                <button id="submitBtn" class="button">Submit</button>
+                <p id="error" class="error"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features hidden">
+        <div class="container">
+            <h2>Hero Information</h2>
+            <div id="heroCards" class="cards">
+                <!-- Hero cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i data-lucide="gamepad-2"></i>
+                    <span>Gem TD Hero Changer</span>
+                </div>
+                <p>© <%= new Date().getFullYear() %> Your Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
