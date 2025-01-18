@@ -10,6 +10,7 @@ async function fromData(id, data) {
   }
 
   return {
+    heroId: id,
     hero: heroes[id],
     effect: data.effect ? effects[data.effect] : null,
     abilities: heroAbilities,

@@ -156,10 +156,12 @@ header {
   margin-bottom: 1.5rem;
 }
 
-.card-header i {
-  width: 2.5rem;
-  height: 2.5rem;
-  color: var(--accent);
+.hero-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  background-color: var(--muted);
 }
 
 .card-title {
