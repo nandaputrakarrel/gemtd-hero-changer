@@ -44,7 +44,7 @@ fs.readdirSync(__dirname + '/api/routes').filter((file) => {
   app.use('/', require(__dirname + '/api/routes/' + eachFile));
 });
 
-const defaultPort = process.env.PORT || 3000;
+const defaultPort = process.env.PORT || 3001;
 app.listen(defaultPort, () => {
   console.log(`GemTD Updater started at port : ${defaultPort}`);
 });
