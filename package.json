@@ -4,7 +4,8 @@
   "description": "Backend to pick hero for Dota 2 GemTD",
   "main": "src/app.js",
   "scripts": {
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ./src/app.js",
+    "prod": "node ./src/app.js"
   },
   "author": "Gravity",
   "license": "ISC",
