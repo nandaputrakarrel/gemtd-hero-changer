@@ -362,24 +362,6 @@ header {
   }
 }
 
-.action-button {
-  width: 100%;
-  padding: 0.75rem;
-  background: var(--accent-gradient);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease, background 0.3s ease, transform 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
 .action-button:before {
   content: '';
   position: absolute;
@@ -488,80 +470,6 @@ header {
   border-top: 1px solid var(--border);
 }
 
-.action-button {
-  width: 100%;
-  padding: 0.75rem;
-  background: var(--accent-gradient);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
-  .action-button:before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.4s ease-out;
-  }
-  
-  .action-button:active:before {
-    transform: translate(-50%, -50%) scale(2);
-    opacity: 0;
-  }
-  
-  .action-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--glow);
-  }
-  
-  .action-button:disabled {
-    animation: pulse 1.5s ease-in-out infinite;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-  
-  .action-button.success {
-    animation: success-pop 0.5s ease-out;
-    background: var(--success);
-  }
-  
-  .action-button.error {
-    animation: success-pop 0.5s ease-out;
-    background: var(--error);
-  }
-  
-  .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--glow);
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
-  }
-  
-  .features {
-    transition: opacity 0.5s ease;
-    opacity: 0;
-  }
-  
-  .features.visible {
-    opacity: 1;
-  }
-
 .ability-item:last-child {
   border-bottom: none;
 }
@@ -654,6 +562,7 @@ header {
   .features.visible {
     opacity: 1;
   }
+}
 
 .ability-item:last-child {
   border-bottom: none;
@@ -673,26 +582,6 @@ header {
   padding-top: 1rem;
   border-top: 1px solid var(--border);
 }
-
-.action-button {
-  width: 100%;
-  padding: 0.75rem;
-  background: var(--accent-gradient);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  position: relative;
-  overflow: hidden;
-}
-
-
 
 .action-button i {
   width: 1.25rem;
