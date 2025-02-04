@@ -89,9 +89,17 @@ function createHeroCard(hero) {
 
       actionButton.innerHTML = '<i data-lucide="check"></i>Selected!';
       actionButton.classList.add('success');
+      actionButton.disabled = false;
+      
+      setTimeout(() => {
+        actionButton.innerHTML = '<i data-lucide="check"></i>Select Hero';
+        actionButton.classList.remove('success');
+        lucide.createIcons();
+      }, 2000);
     } catch (error) {
       actionButton.innerHTML = '<i data-lucide="alert-triangle"></i>Failed';
       actionButton.classList.add('error');
+      actionButton.disabled = false;
       console.error('Error:', error);
     }
     lucide.createIcons();
@@ -166,10 +174,10 @@ const floatingBackBtn = document.getElementById('floatingBackBtn');
 const handleBackToHero = () => {
   featuresSection.classList.remove('visible');
   setTimeout(() => {
+    steamIdInput.value = '';
     featuresSection.classList.add('hidden');
     document.querySelector('.hero').classList.remove('hidden');
     floatingBackBtn.classList.add('hidden');
-    steamIdInput.value = '';
   }, 500);
 };
 
