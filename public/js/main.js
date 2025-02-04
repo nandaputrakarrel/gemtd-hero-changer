@@ -8,138 +8,99 @@ const featuresSection = document.getElementById('features');
 const heroCards = document.getElementById('heroCards');
 const featuresTitle = document.getElementById('featuresTitle');
 const headerImage = document.getElementById('headerImage');
-
-async function handleHeroAction(steamId, heroId) {
-  try {
-    const button = document.querySelector(`button[data-hero="${heroId}"]`);
-    button.disabled = true;
-    button.innerHTML = `
-      <i data-lucide="loader-2" class="animate-spin"></i>
-      Processing...
-    `;
-    lucide.createIcons({
-      icons: {
-        'loader-2': lucide.icons['loader-2']
-      },
-      element: button
-    });
-
-    const response = await fetch('/api/gem/set', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ 
-        steamId,
-        heroId 
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    button.style.backgroundColor = 'var(--success)';
-    button.innerHTML = `
-      <i data-lucide="check"></i>
-      Success!
-    `;
-    lucide.createIcons({
-      icons: {
-        check: lucide.icons.check
-      },
-      element: button
-    });
-
-    setTimeout(() => {
-      button.style.backgroundColor = '';
-      button.disabled = false;
-      button.innerHTML = `
-        <i data-lucide="wand-2"></i>
-        Select Hero
-      `;
-      lucide.createIcons({
-        icons: {
-          'wand-2': lucide.icons['wand-2']
-        },
-        element: button
-      });
-    }, 2000);
-
-  } catch (error) {
-    console.error('Error:', error);
-    const button = document.querySelector(`button[data-hero="${heroId}"]`);
-    button.style.backgroundColor = 'var(--error)';
-    button.innerHTML = `
-      <i data-lucide="x"></i>
-      Error
-    `;
-    lucide.createIcons({
-      icons: {
-        x: lucide.icons.x
-      },
-      element: button
-    });
-
-    setTimeout(() => {
-      button.style.backgroundColor = '';
-      button.disabled = false;
-      button.innerHTML = `
-        <i data-lucide="wand-2"></i>
-        Select Hero
-      `;
-      lucide.createIcons({
-        icons: {
-          'wand-2': lucide.icons['wand-2']
-        },
-        element: button
-      });
-    }, 2000);
-  }
-}
+const searchAgainBtn = document.getElementById('searchAgainBtn');
 
 function createHeroCard(hero) {
   const card = document.createElement('div');
   card.className = 'card';
-  
-  card.innerHTML = `
-    <div class="card-header">
-      <img 
-        src="${hero.heroImage}" 
-        alt="${hero.hero}"
-        class="hero-image"
-        onerror="this.src='https://cdn.akamai.steamstatic.com/apps/dota2/images/dota_react/heroes/default.png'"
-      >
-      <h3 class="card-title">${hero.hero}</h3>
-    </div>
-    <span class="effect-tag">${hero.effect || "No Effect"}</span>
-    <ul class="abilities-list">
-      ${hero.abilities.map(ability => `
-        <li class="ability-item">
-          <span class="ability-name">${ability.name}</span>
-          <span class="ability-level">Level ${ability.level}</span>
-        </li>
-      `).join('')}
-    </ul>
-    <div class="card-action">
-      <button 
-        class="action-button"
-        data-hero="${hero.heroId}"
-        onclick="handleHeroAction('${steamIdInput.value}', '${hero.heroId}')"
-      >
-        <i data-lucide="wand-2"></i>
-        Select Hero
-      </button>
-    </div>
-  `;
-  
-  lucide.createIcons({
-    icons: {
-      'wand-2': lucide.icons['wand-2']
-    },
-    element: card
+
+  const cardHeader = document.createElement('div');
+  cardHeader.className = 'card-header';
+
+  const heroImage = document.createElement('img');
+  heroImage.className = 'hero-image';
+  heroImage.src = hero.heroImage;
+  heroImage.alt = hero.hero;
+
+  const cardTitle = document.createElement('h3');
+  cardTitle.className = 'card-title';
+  cardTitle.textContent = hero.hero;
+
+  cardHeader.appendChild(heroImage);
+  cardHeader.appendChild(cardTitle);
+  card.appendChild(cardHeader);
+
+  if (hero.effect) {
+    const effectTag = document.createElement('span');
+    effectTag.className = 'effect-tag';
+    effectTag.textContent = hero.effect;
+    card.appendChild(effectTag);
+  }
+
+  if (hero.abilities && hero.abilities.length > 0) {
+    const abilitiesList = document.createElement('ul');
+    abilitiesList.className = 'abilities-list';
+
+    hero.abilities.forEach(ability => {
+      const abilityItem = document.createElement('li');
+      abilityItem.className = 'ability-item';
+
+      const abilityName = document.createElement('span');
+      abilityName.className = 'ability-name';
+      abilityName.textContent = ability.name;
+
+      const abilityLevel = document.createElement('span');
+      abilityLevel.className = 'ability-level';
+      abilityLevel.textContent = `Level ${ability.level}`;
+
+      abilityItem.appendChild(abilityName);
+      abilityItem.appendChild(abilityLevel);
+      abilitiesList.appendChild(abilityItem);
+    });
+
+    card.appendChild(abilitiesList);
+  }
+
+  const cardAction = document.createElement('div');
+  cardAction.className = 'card-action';
+
+  const actionButton = document.createElement('button');
+  actionButton.className = 'action-button';
+  actionButton.innerHTML = '<i data-lucide="check"></i>Select Hero';
+  actionButton.addEventListener('click', async () => {
+    try {
+      actionButton.disabled = true;
+      actionButton.innerHTML = '<i data-lucide="loader-2" class="animate-spin"></i>Selecting...';
+      lucide.createIcons();
+
+      const response = await fetch('/api/gem/set', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          steamId: steamIdInput.value.trim(),
+          heroId: hero.heroId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      actionButton.innerHTML = '<i data-lucide="check"></i>Selected!';
+      actionButton.classList.add('success');
+    } catch (error) {
+      actionButton.innerHTML = '<i data-lucide="alert-triangle"></i>Failed';
+      actionButton.classList.add('error');
+      console.error('Error:', error);
+    }
+    lucide.createIcons();
   });
-  
+
+  cardAction.appendChild(actionButton);
+  card.appendChild(cardAction);
+
   return card;
 }
 
@@ -181,7 +142,13 @@ submitBtn.addEventListener('click', async () => {
         heroCards.appendChild(card);
       });
       
+      document.querySelector('.hero').classList.add('hidden');
       featuresSection.classList.remove('hidden');
+      setTimeout(() => {
+        featuresSection.classList.add('visible');
+        searchAgainBtn.classList.remove('hidden');
+        searchAgainBtn.classList.add('visible');
+      }, 100);
     } else {
       throw new Error('Could not process');
     }
@@ -189,9 +156,21 @@ submitBtn.addEventListener('click', async () => {
   } catch (error) {
     errorText.textContent = error.message;
     featuresSection.classList.add('hidden');
+    featuresSection.classList.remove('visible');
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Submit';
   }
+});
+
+searchAgainBtn.addEventListener('click', () => {
+  featuresSection.classList.remove('visible');
+  setTimeout(() => {
+    featuresSection.classList.add('hidden');
+    document.querySelector('.hero').classList.remove('hidden');
+    searchAgainBtn.classList.remove('visible');
+    searchAgainBtn.classList.add('hidden');
+    steamIdInput.value = '';
+  }, 500);
 });
 
