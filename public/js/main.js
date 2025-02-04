@@ -111,6 +111,13 @@ function createHeroCard(hero) {
   return card;
 }
 
+steamIdInput.addEventListener('keypress', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    submitBtn.click();
+  }
+});
+
 submitBtn.addEventListener('click', async () => {
   const steamId = steamIdInput.value.trim();
   
