@@ -8,7 +8,6 @@ const featuresSection = document.getElementById('features');
 const heroCards = document.getElementById('heroCards');
 const featuresTitle = document.getElementById('featuresTitle');
 const headerImage = document.getElementById('headerImage');
-const searchAgainBtn = document.getElementById('searchAgainBtn');
 
 function createHeroCard(hero) {
   const card = document.createElement('div');
@@ -146,8 +145,7 @@ submitBtn.addEventListener('click', async () => {
       featuresSection.classList.remove('hidden');
       setTimeout(() => {
         featuresSection.classList.add('visible');
-        searchAgainBtn.classList.remove('hidden');
-        searchAgainBtn.classList.add('visible');
+        floatingBackBtn.classList.remove('hidden');
       }, 100);
     } else {
       throw new Error('Could not process');
@@ -163,14 +161,17 @@ submitBtn.addEventListener('click', async () => {
   }
 });
 
-searchAgainBtn.addEventListener('click', () => {
+const floatingBackBtn = document.getElementById('floatingBackBtn');
+
+const handleBackToHero = () => {
   featuresSection.classList.remove('visible');
   setTimeout(() => {
     featuresSection.classList.add('hidden');
     document.querySelector('.hero').classList.remove('hidden');
-    searchAgainBtn.classList.remove('visible');
-    searchAgainBtn.classList.add('hidden');
+    floatingBackBtn.classList.add('hidden');
     steamIdInput.value = '';
   }, 500);
-});
+};
+
+floatingBackBtn.addEventListener('click', handleBackToHero);
 

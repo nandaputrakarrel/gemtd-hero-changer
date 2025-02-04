@@ -195,12 +195,44 @@ header {
 .features-header {
   text-align: center;
   margin-bottom: 2rem;
+  position: relative;
+  padding-top: 2rem;
+}
+
+.floating-back-btn {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  z-index: 20;
+}
+
+.floating-back-btn:hover {
+  transform: translateX(-50%) translateY(-2px);
+  box-shadow: var(--glow);
+}
+
+.floating-back-btn.hidden {
+  display: none;
 }
 
 .features-header img {
   width: 96px;
   height: 96px;
   border-radius: 0.5rem;
+  margin-top: 1rem;
 }
 
 .features-header h2 {
