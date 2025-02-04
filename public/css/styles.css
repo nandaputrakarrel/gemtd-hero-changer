@@ -50,6 +50,13 @@ header {
   justify-content: space-between;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--foreground);
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -201,7 +208,7 @@ header {
 
 .floating-back-btn {
   position: absolute;
-  top: 0;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   width: 40px;
