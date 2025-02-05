@@ -3,24 +3,15 @@ const axios = require('axios');
 
 const heroes = require('../models/hero')
 
-async function getUserProfile(steamId) {
+async function getUserProfile(input) {
   try {
-    const steamResponse = await axios.get(
-      `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${steamId}`
-    )
-
-    if (steamResponse.data.response.players.length < 1) {
-      return {
-        success: false,
-        status: 404
-      }
-    }
+    var profile = await getSteamProfile(input);
 
     const response = await axios.get(
-      `${process.env.GEMTD_HOST}/202203/heros/get/@${steamId}?ver=${process.env.GEMTD_VER}&compen_shell=2&pcount=1&award=true`
+      `${process.env.GEMTD_HOST}/202203/heros/get/@${profile.steamid}?ver=${process.env.GEMTD_VER}&compen_shell=2&pcount=1&award=true`
     );
 
-    const data = response.data.data[`${steamId}`];
+    const data = response.data.data[`${profile.steamid}`];
     const heroList = [];
       for (const [key,value] of Object.entries(data['hero_sea'])) {
         heroList.push(await heroes.fromData(key, value))
@@ -31,8 +22,8 @@ async function getUserProfile(steamId) {
       currentHero: await heroes.fromData(data['onduty_hero']['hero_id'], data['onduty_hero']),
       heroList: heroList,
       playerInformation: {
-        name: steamResponse.data.response.players[0].personaname,
-        avatar: steamResponse.data.response.players[0].avatarfull,
+        name: profile.personaname,
+        avatar: profile.avatarfull,
         currency: {
           shell: data.shell,
           iceCube: data.ice,
@@ -49,16 +40,18 @@ async function getUserProfile(steamId) {
       }
     };
   } catch (error) {
+    console.log(error)
     return {
       success: false
     }
   }
 }
 
-async function setHero(steamId, heroId) {
+async function setHero(input, heroId) {
   try {
-    const response = await axios.get(
-      `${process.env.GEMTD_HOST}/hero/save/${heroId}@${steamId}?hehe=1`);
+    const profile = await getSteamProfile(input);
+    await axios.get(
+      `${process.env.GEMTD_HOST}/hero/save/${heroId}@${profile.steamid}?hehe=1`);
 
     return {
       success: true
@@ -69,6 +62,41 @@ async function setHero(steamId, heroId) {
       success: false
     };
   }
+}
+
+async function getSteamProfile(input) {
+  var profile;
+    if (input.length >= 17) {
+      const steamResponse = await axios.get(
+        `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${input}`
+      )
+
+      if (steamResponse.data.response.players.length < 1) {
+        return {
+          success: false,
+          status: 404
+        }
+      }
+
+      profile = steamResponse.data.response.players[0];
+    } else {
+      const openDotaResponse = await axios.get(
+        `https://api.opendota.com/api/players/${input}`
+      )
+
+      if (openDotaResponse.status != 200) {
+        return {
+          success: false,
+          status: 404
+        }
+      }
+
+      profile = openDotaResponse.data.profile;
+    }
+
+    console.log(profile);
+
+    return profile;
 }
 
 module.exports = {
