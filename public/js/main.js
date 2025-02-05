@@ -84,7 +84,7 @@ function createHeroCard(hero) {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Something went wrong.`);
       }
 
       actionButton.innerHTML = '<i data-lucide="check"></i>Selected!';
@@ -137,10 +137,10 @@ submitBtn.addEventListener('click', async () => {
     
     if (!response.ok) {
       if (response.status == 404) {
-        throw new Error("Account not found.")
+        throw new Error("Account not found, try to use different ID.")
       }
 
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Something went wrong, try again later.`);
     }
 
     const result = await response.json();
