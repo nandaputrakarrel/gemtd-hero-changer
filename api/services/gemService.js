@@ -1,7 +1,8 @@
 require('dotenv').config();
 const axios = require('axios');
 
-const heroes = require('../models/hero')
+const heroes = require('../models/hero');
+const GemError = require('../exceptions/gemError');
 
 async function getUserProfile(input) {
   try {
@@ -42,7 +43,9 @@ async function getUserProfile(input) {
   } catch (error) {
     console.log(error)
     return {
-      success: false
+      success: false,
+      status: error.statusCode,
+      message: error.message
     }
   }
 }
@@ -65,7 +68,8 @@ async function setHero(input, heroId) {
 }
 
 async function getSteamProfile(input) {
-  var profile;
+  try {
+    var profile;
     if (input.length >= 17) {
       const steamResponse = await axios.get(
         `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_WEB_API_KEY}&steamids=${input}`
@@ -97,6 +101,14 @@ async function getSteamProfile(input) {
     console.log(profile);
 
     return profile;
+  } catch (error) {
+    console.log(error)
+    if (error.status == 404) {
+      throw new GemError('Player not found, try to use different ID.', 404);
+    } 
+
+    throw new GemError('Something went wrong, try again later.', 500);
+  }
 }
 
 module.exports = {

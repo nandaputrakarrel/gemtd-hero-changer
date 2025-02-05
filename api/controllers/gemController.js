@@ -6,10 +6,8 @@ async function getUserProfile(req, res, next) {
     res.status(200).send({
       data: result,
     });
-  } else if (result.status == 404) {
-    res.status(404).send();
   } else {
-    res.status(500).send();
+    res.status(result.status).send(result);
   }
 }
 
