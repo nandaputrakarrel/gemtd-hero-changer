@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gem TD Hero Changer</title>
+    <title>Progress Calculator - Gem TD Hero Changer</title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/progress.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-background">
@@ -26,32 +27,58 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Calculator Section -->
     <section class="hero">
         <div class="container">
-            <h1>Who are you playing with?</h1>
-            <div class="input-container">
-                <input type="text" id="steamId" placeholder="Enter their Steam/Dota ID" class="input">
+            <h1>Forecasting Progress?</h1>
+            <div class="input-container calculator-inputs">
+                <div class="input-group">
+                    <label for="currentWave">Current Wave</label>
+                    <input type="number" id="currentWave" placeholder="Enter Current Wave" class="input" min="1" value="1">
+                </div>
+                <div class="input-group">
+                    <label for="currentProgress">Current Progress</label>
+                    <input type="number" id="currentProgress" placeholder="Enter Current Percentage" class="input" min="0" max="100" value="50">
+                </div>
+                <div class="input-group">
+                    <label for="currentMobCount">Current Mob Count</label>
+                    <input type="number" id="currentMobCount" placeholder="Enter Current Mob Count" class="input" min="0" value="10">
+                </div>
+                <div class="input-group">
+                    <label for="currentKill">Current Kills</label>
+                    <input type="number" id="currentKill" placeholder="Enter Current Kill" class="input" min="0" value="0">
+                </div>
                 <div class="button-group">
-                    <button id="submitBtn" class="button">Submit</button>
+                    <button id="calculateBtn" class="button">Calculate</button>
                 </div>
                 <p id="error" class="error"></p>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section id="features" class="features hidden">
+    <!-- Results Section -->
+    <section id="results" class="features hidden">
         <div class="container">
             <div class="features-header">
                 <button id="floatingBackBtn" class="floating-back-btn hidden">
                     <i data-lucide="arrow-down"></i>
                 </button>
-                <img id="headerImage" src="">
-                <h2 id="featuresTitle">Hero Information</h2>
+                <h2>Calculation Results</h2>
             </div>
-            <div id="heroCards" class="cards">
-                <!-- Hero cards will be dynamically inserted here -->
+            <div class="results-table">
+                <table id="progressTable">
+                    <thead>
+                        <tr>
+                            <th>Wave</th>
+                            <th>Max Progress (End)</th>
+                            <th>Mob Count (End)</th>
+                            <th>Total Kills</th>
+                        </tr>
+                    </thead>
+                    <tbody id="progressTableBody">
+                        <!-- Results will be dynamically inserted here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
@@ -69,6 +96,6 @@
         </div>
     </footer>
 
-    <script src="/js/main.js"></script>
+    <script src="/js/progress.js"></script>
 </body>
 </html>

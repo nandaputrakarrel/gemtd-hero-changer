@@ -50,6 +50,11 @@ header {
   justify-content: space-between;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   display: flex;
   align-items: center;
