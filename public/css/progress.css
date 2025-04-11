@@ -1,0 +1,125 @@
+/* Additional styles for Progress Calculator */
+
+/* Background class */
+.bg-background {
+  background-color: var(--background);
+}
+
+/* Calculator specific styles */
+.calculator-inputs {
+  max-width: 24rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0 auto;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--foreground);
+  text-align: center;
+}
+
+.input-group .input {
+  text-align: center;
+  margin-bottom: 0;
+  max-width: 16rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button-group {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.button-group .button {
+  max-width: 12rem;
+}
+
+/* Results table styles */
+.results-table {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 2rem;
+}
+
+.results-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.results-table th,
+.results-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.results-table th {
+  background: var(--primary);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.results-table tr:last-child td {
+  border-bottom: none;
+}
+
+.results-table tr:hover td {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* Features section overrides for results */
+#results.features {
+  padding-top: 3rem;
+}
+
+#results .features-header {
+  margin-bottom: 1rem;
+}
+
+#results .features-header h2 {
+  margin-bottom: 1rem;
+  font-size: 2.25rem;
+  background: linear-gradient(300deg, #3b82f6, #60a5fa, #00cc88, #3b82f6);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient 8s ease infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .calculator-inputs {
+    max-width: 100%;
+  }
+  
+  .results-table th,
+  .results-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  #results.features {
+    padding: 3rem 0.5rem;
+  }
+  
+  #results .features-header h2 {
+    font-size: 1.75rem;
+  }
+}

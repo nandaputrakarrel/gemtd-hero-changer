@@ -39,16 +39,15 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.get('/progress', (req, res) => {
+  res.render('progress');
+});
+
 fs.readdirSync(__dirname + '/api/routes').filter((file) => {
   return file.toLowerCase().endsWith('.js');
 }).forEach((eachFile) => {
   app.use('/', require(__dirname + '/api/routes/' + eachFile));
 });
-
-const defaultPort = process.env.PORT || 3000;
-// app.listen(defaultPort, () => {
-//   console.log(`GemTD Updater started at port : ${defaultPort}`);
-// });
 
 app.use((err, req, res, next) => {
   if (typeof err.handle === 'function') {
@@ -64,5 +63,10 @@ app.use((err, req, res, next) => {
 });
 
 vercelSpeedInsights.injectSpeedInsights()
+
+// const defaultPort = process.env.PORT || 3000;
+// app.listen(defaultPort, () => {
+//   console.log(`GemTD Updater started at port : ${defaultPort}`);
+// });
 
 module.exports = app;
