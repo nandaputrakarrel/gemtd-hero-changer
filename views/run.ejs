@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8880899414718302"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run - Gem TD Hero Changer</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/run.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-background">
+    <!-- Header -->
+    <header class="border-b">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="/" class="logo" style="text-decoration: none;">
+                        <i data-lucide="house"></i>
+                    </a>
+                    <a href="/" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Gem TD Hero Changer</a>
+                    <a href="/progress" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Progress Calculator</a>
+                    <a href="/planner" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Build Planner</a>
+                    <a href="/run" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Run</a>
+                </div>
+                <div class="header-actions">
+                    <a href='https://ko-fi.com/Z8Z3195OPM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Run content -->
+    <section class="hero" style="padding: 18px 0;">
+        <div class="container">
+            <div class="run-page">
+                <div class="card">
+                    <h1>Run (Per game)</h1>
+                    <div class="sub">
+                        Shows only what you still need. Click = picked +1. Right-click = picked -1.
+                        If you pick more than needed, it shows <span style="color:#ff9aa0">red (surplus)</span>.
+                        One-shot eligible towers are shown here too — when you pick one-shot, it will <b>deduct gems</b>.
+                        One-shot also <b>locks</b> the gems it represents (you can't decrease those gems unless you undo the one-shot).
+                    </div>
+
+                    <div class="row">
+                        <select id="buildSelect"></select>
+                        <a href="/planner" style="padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: #e6edf6; text-decoration: none;">Back to Planner</a>
+                        <button id="resetRun" class="danger">Reset Picked</button>
+                    </div>
+
+                    <div class="sub" id="status"></div>
+
+                    <div id="planIconsWrap" class="tile" style="margin-top:10px">
+                        <div class="name">Plan towers</div>
+                        <div class="meta">Red = not finished • Green = finished</div>
+                        <div id="planIcons" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px"></div>
+                    </div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">One-shot towers (optional) + Secret towers</h2>
+                    <div id="needTowers" class="grid"></div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">Sparkling pedals (one-shot)</h2>
+                    <div id="needPedals" class="grid"></div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">Base gems</h2>
+                    <div id="needGems" class="grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i data-lucide="gamepad-2"></i>
+                    <span>Gem TD Hero Changer</span>
+                </div>
+                <p>© <%= new Date().getFullYear() %> Gravity. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/run.js"></script>
+</body>
+</html>

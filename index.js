@@ -43,6 +43,14 @@ app.get('/progress', (req, res) => {
   res.render('progress');
 });
 
+app.get('/planner', (req, res) => {
+  res.render('planner');
+});
+
+app.get('/run', (req, res) => {
+  res.render('run');
+});
+
 fs.readdirSync(__dirname + '/api/routes').filter((file) => {
   return file.toLowerCase().endsWith('.js');
 }).forEach((eachFile) => {

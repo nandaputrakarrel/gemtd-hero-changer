@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8880899414718302"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Planner - Gem TD Hero Changer</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/planner.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-background">
+    <!-- Header -->
+    <header class="border-b">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="/" class="logo" style="text-decoration: none;">
+                        <i data-lucide="house"></i>
+                    </a>
+                    <a href="/" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Gem TD Hero Changer</a>
+                    <a href="/progress" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Progress Calculator</a>
+                    <a href="/planner" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Build Planner</a>
+                    <a href="/run" class="nav-link" style="text-decoration: none; color: var(--foreground); margin-left: 2rem;">Run</a>
+                </div>
+                <div class="header-actions">
+                    <a href='https://ko-fi.com/Z8Z3195OPM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi5.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Planner content -->
+    <section class="hero" style="padding: 18px 0;">
+        <div class="container">
+            <div class="planner-page">
+                <div class="card">
+                    <h1>Build Planner</h1>
+                    <div class="sub">
+                        Create builds and pick what you want to build. Click = +1, Right-click = -1.
+                        Pedals here are <b>Sparkling only</b>.
+                    </div>
+
+                    <div class="row">
+                        <select id="buildSelect"></select>
+                        <input id="buildName" placeholder="new build name..." />
+                        <button id="createBuild">Create</button>
+                        <button id="renameBuild">Rename</button>
+                        <button id="deleteBuild" class="danger">Delete</button>
+                        <a href="/run" style="padding: 10px 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: #e6edf6; text-decoration: none;">Open Run</a>
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <input id="search" placeholder="search..." style="flex:1;min-width:220px"/>
+                        <button id="clearBuild" class="danger">Clear Build</button>
+                    </div>
+
+                    <div class="row" style="margin-top:10px;">
+                        <button id="exportBtn">Export Builds</button>
+                        <button id="importBtn">Import Builds</button>
+                        <input id="hashBox" placeholder="paste hash here" style="flex:1;min-width:260px"/>
+                    </div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">Current Build Items</h2>
+                    <div id="current" class="grid"></div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">Towers</h2>
+                    <div id="towers" class="grid"></div>
+
+                    <h2 style="margin:18px 0 10px;font-size:15px">Sparkling Pedals</h2>
+                    <div class="sub">Planner stores only "Sparkling {Pedal}" targets.</div>
+                    <div id="pedals" class="grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                    <i data-lucide="gamepad-2"></i>
+                    <span>Gem TD Hero Changer</span>
+                </div>
+                <p>© <%= new Date().getFullYear() %> Gravity. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/planner.js"></script>
+</body>
+</html>

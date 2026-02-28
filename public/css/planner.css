@@ -1,0 +1,121 @@
+.planner-page .card {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #0f1b33;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+.planner-page .card h1 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+.planner-page .sub {
+  color: rgba(230, 237, 246, 0.72);
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+.planner-page .row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.planner-page input,
+.planner-page select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0b1429;
+  color: #e6edf6;
+  outline: none;
+}
+.planner-page button {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6edf6;
+  cursor: pointer;
+}
+.planner-page button.danger {
+  background: #2a0f16;
+}
+.planner-page .grid {
+  display: grid;
+  gap: 10px;
+  /* Default: flexible columns for small/medium screens */
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+/* On wider screens, force more columns per row */
+@media (min-width: 1024px) {
+  .planner-page .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.planner-page .tile {
+  background: #0b1429;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 12px;
+  user-select: none;
+}
+.planner-page .tile.active {
+  outline: 2px solid rgba(120, 200, 255, 0.25);
+  background: #0b1733;
+}
+.planner-page .top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.planner-page .left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+.planner-page .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #061025;
+  flex: 0 0 auto;
+}
+.planner-page .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.planner-page .name {
+  font-weight: 800;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.planner-page .meta {
+  font-size: 11px;
+  color: rgba(230, 237, 246, 0.72);
+  margin-top: 2px;
+  text-align: left;
+}
+.planner-page .tag {
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+}
+.planner-page .mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}

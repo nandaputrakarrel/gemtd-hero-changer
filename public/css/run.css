@@ -1,0 +1,185 @@
+.run-page .card {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #0f1b33;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+.run-page .card h1 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+.run-page .sub {
+  color: rgba(230, 237, 246, 0.72);
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+.run-page .row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.run-page select {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0b1429;
+  color: #e6edf6;
+  outline: none;
+}
+.run-page button {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e6edf6;
+  cursor: pointer;
+}
+.run-page button.danger {
+  background: #2a0f16;
+}
+.run-page .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+.run-page .tile {
+  background: #0b1429;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding: 12px;
+  user-select: none;
+}
+.run-page .tile.good {
+  outline: 2px solid rgba(120, 200, 255, 0.25);
+  background: #0b1733;
+}
+.run-page .tile.bad {
+  outline: 2px solid rgba(255, 120, 120, 0.25);
+  background: #231018;
+}
+.run-page .top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.run-page .left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+}
+.run-page .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #061025;
+  flex: 0 0 auto;
+}
+.run-page .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.run-page .name {
+  font-weight: 800;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.run-page .meta {
+  font-size: 11px;
+  color: rgba(230, 237, 246, 0.72);
+  margin-top: 2px;
+}
+.run-page .tag {
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+}
+.run-page .mono {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+
+.run-page .badge {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  color: #e6edf6;
+}
+
+.run-page .iconChip {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 80, 80, 0.55);
+  background: rgba(255, 80, 80, 0.08);
+  position: relative;
+  transition: all 0.2s ease;
+}
+.run-page .iconChip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.85;
+}
+.run-page .iconChip::after {
+  content: "✗";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 14px;
+  color: #fff;
+  background: rgba(255, 80, 80, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+.run-page .iconChip.done {
+  border: 4px solid rgba(120, 255, 160, 0.7);
+  background: rgba(120, 255, 160, 0.1);
+  box-shadow: 0 0 0 3px rgba(120, 255, 160, 0.25), 0 0 26px rgba(120, 255, 160, 0.55), inset 0 0 18px rgba(120, 255, 160, 0.2);
+  transform: translateY(-2px) scale(1.03);
+  filter: saturate(1.4) brightness(1.18) contrast(1.05);
+}
+.run-page .iconChip.done img {
+  opacity: 1;
+}
+.run-page .iconChip.done::after {
+  content: "✓";
+  background: rgba(120, 255, 160, 0.98);
+  color: #061025;
+  box-shadow: 0 0 12px rgba(120, 255, 160, 0.55);
+}
+.run-page .iconChip.done::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 30% 20%, rgba(120, 255, 160, 0.35), transparent 60%);
+  pointer-events: none;
+}
