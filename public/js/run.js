@@ -490,7 +490,14 @@
             const img = document.createElement("img");
             img.loading = "lazy";
             img.alt = towerName;
-            img.src = SECRET_SET.has(towerName) ? SECRET_IMG(toSnake(towerName)) : TOWER_IMG(toSnake(towerName));
+
+            // Use basic gem icon for E1–E5 (aura towers), advanced/secret art otherwise
+            if (/^E[1-5]$/.test(towerName)) {
+                img.src = BASIC_IMG("E");
+            } else {
+                img.src = SECRET_SET.has(towerName) ? SECRET_IMG(toSnake(towerName)) : TOWER_IMG(toSnake(towerName));
+            }
+
             img.onerror = () => { img.remove(); chip.textContent = towerName.slice(0,6); };
             chip.appendChild(img);
             const badge = document.createElement("div");

@@ -5,6 +5,7 @@
     const TOWER_IMG  = (snake) => '/gems/advanced/gemtd_' + snake + '.png';
     const SECRET_IMG = (snake) => '/gems/secrets/gemtd_' + snake + '.png';
     const PEDAL_IMG  = (snakeNoPedal) => '/gems/pedals/gemtd_' + snakeNoPedal + '.png';
+    const BASIC_IMG  = (letter) => '/gems/basics/' + letter + '.png';
 
     const COMBINED_NAMES = [
         "Silver","Silver Knight","Pink Diamond","Huge Pink Diamond","Koh-i-noor Diamond",
@@ -21,6 +22,9 @@
         "Ensnare Pedal","Gale Pedal","Torrent Pedal","Howl Pedal",
         "Acid Pedal","Paralysis Pedal","Terrorize Pedal","Decrepify Pedal"
     ];
+
+    // Aura towers section: E1–E5
+    const AURA_TOWERS = ["E1","E2","E3","E4","E5"];
 
     function toSnake(name){
         return name.toLowerCase().replace(/['']/g,"").replace(/-/g," ")
@@ -91,6 +95,7 @@
         current: document.getElementById("current"),
         towers: document.getElementById("towers"),
         pedals: document.getElementById("pedals"),
+        auraTowers: document.getElementById("aura-towers"),
         exportBtn: document.getElementById("exportBtn"),
         importBtn: document.getElementById("importBtn"),
         hashBox: document.getElementById("hashBox"),
@@ -157,8 +162,13 @@
         const pedalEntries = Object.entries(b.pedals).sort((a,b)=>a[0].localeCompare(b[0]));
 
         for(const [name,count] of towerEntries){
-            const isSecret = SECRET_NAMES.includes(name);
-            const img = isSecret ? SECRET_IMG(toSnake(name)) : TOWER_IMG(toSnake(name));
+            let img;
+            if (/^E[1-5]$/.test(name)) {
+                img = BASIC_IMG("E");
+            } else {
+                const isSecret = SECRET_NAMES.includes(name);
+                img = isSecret ? SECRET_IMG(toSnake(name)) : TOWER_IMG(toSnake(name));
+            }
             els.current.appendChild(makeTile(name, "Tower", img, count, (rc)=>adjust(b.towers,name, rc?-1:+1)));
         }
         for(const [name,count] of pedalEntries){
@@ -180,6 +190,19 @@
             const img = isSecret ? SECRET_IMG(toSnake(name)) : TOWER_IMG(toSnake(name));
             const count = b.towers[name]||0;
             els.towers.appendChild(makeTile(name, isSecret?"Secret tower":"Tower", img, count, (rc)=>adjust(b.towers,name, rc?-1:+1)));
+        }
+
+        // Aura towers (E1–E5), using basic E gem icon
+        if (els.auraTowers) {
+            els.auraTowers.innerHTML = "";
+            for (const name of AURA_TOWERS) {
+                if (!matches(name)) continue;
+                const count = b.towers[name] || 0;
+                const img = BASIC_IMG("E");
+                els.auraTowers.appendChild(
+                    makeTile(name, "Aura tower", img, count, (rc) => adjust(b.towers, name, rc ? -1 : +1))
+                );
+            }
         }
 
         els.pedals.innerHTML="";
