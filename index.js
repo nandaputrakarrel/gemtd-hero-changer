@@ -51,6 +51,10 @@ app.get('/run', (req, res) => {
   res.render('run');
 });
 
+app.get('/overlay', (req, res) => {
+  res.render('overlay');
+});
+
 fs.readdirSync(__dirname + '/api/routes').filter((file) => {
   return file.toLowerCase().endsWith('.js');
 }).forEach((eachFile) => {
@@ -72,9 +76,11 @@ app.use((err, req, res, next) => {
 
 vercelSpeedInsights.injectSpeedInsights()
 
-// const defaultPort = process.env.PORT || 3000;
-// app.listen(defaultPort, () => {
-//   console.log(`GemTD Updater started at port : ${defaultPort}`);
-// });
+if (require.main === module) {
+  const defaultPort = process.env.PORT || 3000;
+  app.listen(defaultPort, () => {
+    console.log(`GemTD Updater started at port : ${defaultPort}`);
+  });
+}
 
 module.exports = app;

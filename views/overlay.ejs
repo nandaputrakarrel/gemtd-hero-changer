@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>GemTD Run Overlay</title>
+
+    <style>
+        body{
+            margin:0;
+            background:#111111;
+            overflow-y:auto;
+            overflow-x:hidden;
+            user-select:none;
+            font-family:system-ui;
+            color:#e6edf6;
+        }
+
+        #overlayRoot{
+            min-height:100vh;
+        }
+
+        /* DRAG / HEADER BAR */
+        #dragBar{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            padding:8px 10px;
+            cursor:move;
+            font-weight:700;
+            font-size:13px;
+            border-bottom:1px solid rgba(255,255,255,.08);
+            background:rgba(255,255,255,.03);
+            position:sticky;
+            top:0;
+            z-index:10;
+        }
+
+        #title{
+            flex:1;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+            opacity:.95;
+        }
+
+        /* tiny buttons */
+        .miniBtn{
+            cursor:pointer;
+            font-size:11px;
+            padding:6px 8px;
+            border-radius:10px;
+            border:1px solid rgba(255,255,255,.14);
+            background:rgba(255,255,255,.06);
+            color:#e6edf6;
+            text-decoration:none;
+            line-height:1;
+        }
+        .miniBtn.danger{ background:rgba(255,80,80,.14); }
+
+        /* hidden build select (keeps logic working) */
+        #buildSelect{ display:none; }
+
+        /* content */
+        #overlayContent{ padding:10px; }
+
+        /* section labels */
+        .sectionLabel{
+            font-size:11px;
+            font-weight:600;
+            text-transform:uppercase;
+            letter-spacing:.06em;
+            opacity:.45;
+            margin:12px 0 5px;
+        }
+        .sectionLabel:first-child{ margin-top:4px; }
+
+        /* quick bar */
+        #quickBar{
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+        }
+
+        /* gems layout */
+        #gemLists{
+            display:flex;
+            gap:8px;
+        }
+        #gemListLeft,
+        #gemListRight{
+            flex:1;
+            display:flex;
+            flex-wrap:wrap;
+            gap:6px;
+            align-content:flex-start;
+        }
+
+        /* icon buttons */
+        .quickBtn{
+            width:42px;
+            height:42px;
+            border-radius:10px;
+            overflow:hidden;
+            border:1px solid rgba(255,255,255,.12);
+            background:rgba(255,255,255,.05);
+            cursor:pointer;
+            position:relative;
+            transition:transform .06s ease, filter .06s ease;
+        }
+        .quickBtn:hover{ transform:translateY(-1px); filter:brightness(1.05); }
+        .quickBtn:active{ transform:scale(.98); }
+
+        .quickBtn img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+            opacity:.92;
+        }
+
+        /* Completed (picked >= need) */
+        .quickBtn.done{
+            border:2px solid rgba(120,255,160,.80);
+            box-shadow:0 0 10px rgba(120,255,160,.45);
+        }
+        .quickBtn.done img{ opacity:1; }
+
+        .quickCount{
+            position:absolute;
+            right:2px;
+            bottom:2px;
+            font-size:10px;
+            background:#000a;
+            padding:1px 4px;
+            border-radius:6px;
+        }
+
+        /* Optional small label (1SHOT / PEDAL / SECRET) */
+        .quickTag{
+            position:absolute;
+            left:2px;
+            top:2px;
+            font-size:9px;
+            background:#0008;
+            padding:1px 4px;
+            border-radius:6px;
+            border:1px solid rgba(255,255,255,.12);
+            opacity:.9;
+        }
+
+        /* click-to-interact hint bar */
+        #overlayHint {
+            font-size: 11px;
+            text-align: center;
+            padding: 8px 10px;
+            color: rgba(59,130,246,0.8);
+            border-top: 1px solid rgba(59,130,246,0.12);
+            background: rgba(59,130,246,0.05);
+            transition: opacity 0.6s ease;
+        }
+        #overlayHint.hidden { opacity: 0; pointer-events: none; }
+    </style>
+</head>
+
+<body>
+<div id="overlayRoot">
+    <div id="dragBar">
+        <div id="title">☰ GemTD Overlay</div>
+
+        <a class="miniBtn" href="/planner" target="_blank">Planner</a>
+        <button class="miniBtn" id="pipBtn" title="Float above game">⧉</button>
+        <button class="miniBtn danger" id="resetRunBtn">Reset</button>
+
+        <select id="buildSelect"></select>
+    </div>
+
+    <div id="overlayContent">
+        <div class="sectionLabel">Plan</div>
+        <div id="planBar" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+
+        <div class="sectionLabel">One-Shots</div>
+        <div id="quickBar"></div>
+
+        <div class="sectionLabel">Basic Gems</div>
+        <div id="gemLists">
+            <div id="gemListLeft"></div>
+            <div id="gemListRight"></div>
+        </div>
+    </div>
+
+    <div id="overlayHint">👆 Click gems to track picks — right-click to undo</div>
+</div>
+
+<script src="/js/overlay.js"></script>
+</body>
+</html>

@@ -26,6 +26,11 @@
     // Aura towers section: E1–E5
     const AURA_TOWERS = ["E1","E2","E3","E4","E5"];
 
+    // Basic gems for planner targets: E1–E6
+    const GEM_LETTERS = ["E"];
+    const BASE_GEMS = [];
+    for (const L of GEM_LETTERS) for (let i=1;i<=6;i++) BASE_GEMS.push(L+i);
+
     function toSnake(name){
         return name.toLowerCase().replace(/['']/g,"").replace(/-/g," ")
             .replace(/[^a-z0-9 ]/g," ").trim().replace(/\s+/g,"_");
@@ -64,6 +69,7 @@
         builds = obj.builds;
         active = obj.active && builds[obj.active] ? obj.active : Object.keys(builds)[0];
         setActiveBuildName(active);
+        ensureOneBuild(); // migrate missing fields
         saveBuilds();
         render();
     }
@@ -73,13 +79,20 @@
 
     function ensureOneBuild(){
         if(Object.keys(builds).length === 0){
-            builds["default"] = { towers:{}, pedals:{} };
+            builds["default"] = { towers:{}, pedals:{}, gems:{} };
             active = "default";
             setActiveBuildName(active);
             saveBuilds();
         } else if(!builds[active]){
             active = Object.keys(builds)[0];
             setActiveBuildName(active);
+        }
+        // migrate old builds missing fields
+        for (const k of Object.keys(builds)) {
+            if (!builds[k] || typeof builds[k] !== "object") builds[k] = { towers:{}, pedals:{}, gems:{} };
+            if (!builds[k].towers) builds[k].towers = {};
+            if (!builds[k].pedals) builds[k].pedals = {};
+            if (!builds[k].gems)   builds[k].gems = {};
         }
     }
     ensureOneBuild();
@@ -96,6 +109,7 @@
         towers: document.getElementById("towers"),
         pedals: document.getElementById("pedals"),
         auraTowers: document.getElementById("aura-towers"),
+        basicGems: document.getElementById("basicGems"),
         exportBtn: document.getElementById("exportBtn"),
         importBtn: document.getElementById("importBtn"),
         hashBox: document.getElementById("hashBox"),
@@ -153,6 +167,7 @@
     }
 
     function render(){
+        ensureOneBuild();
         renderBuildSelect();
 
         els.current.innerHTML="";
@@ -160,6 +175,7 @@
 
         const towerEntries = Object.entries(b.towers).sort((a,b)=>a[0].localeCompare(b[0]));
         const pedalEntries = Object.entries(b.pedals).sort((a,b)=>a[0].localeCompare(b[0]));
+        const gemEntries   = Object.entries(b.gems).sort((a,b)=>a[0].localeCompare(b[0]));
 
         for(const [name,count] of towerEntries){
             let img;
@@ -176,10 +192,14 @@
             const img = PEDAL_IMG(pedalBaseSnake(baseName));
             els.current.appendChild(makeTile(name, "Sparkling Pedal", img, count, (rc)=>adjust(b.pedals,name, rc?-1:+1)));
         }
+        for(const [name,count] of gemEntries){
+            const img = BASIC_IMG(name[0]);
+            els.current.appendChild(makeTile(name, "Basic Gem", img, count, (rc)=>adjust(b.gems,name, rc?-1:+1)));
+        }
         if(els.current.children.length===0){
             const d=document.createElement("div");
             d.className="tile";
-            d.innerHTML='<div class="name">Empty</div><div class="meta">Click towers/pedals below to add them.</div>';
+            d.innerHTML='<div class="name">Empty</div><div class="meta">Click towers/pedals/gems below to add them.</div>';
             els.current.appendChild(d);
         }
 
@@ -213,6 +233,16 @@
             const count = b.pedals[key]||0;
             els.pedals.appendChild(makeTile(key, "Sparkling Pedal", img, count, (rc)=>adjust(b.pedals,key, rc?-1:+1)));
         }
+
+        if (els.basicGems) {
+            els.basicGems.innerHTML="";
+            for(const g of BASE_GEMS){
+                if(!matches(g)) continue;
+                const img = BASIC_IMG(g[0]);
+                const count = b.gems[g]||0;
+                els.basicGems.appendChild(makeTile(g, "Basic Gem", img, count, (rc)=>adjust(b.gems,g, rc?-1:+1)));
+            }
+        }
     }
 
     els.buildSelect.onchange = () => {
@@ -225,7 +255,7 @@
         const name = (els.buildName.value||"").trim();
         if(!name) return alert("Enter a build name.");
         if(builds[name]) return alert("Build already exists.");
-        builds[name] = { towers:{}, pedals:{} };
+        builds[name] = { towers:{}, pedals:{}, gems:{} };
         active = name;
         setActiveBuildName(active);
         saveBuilds();
@@ -261,6 +291,7 @@
         if(!confirm('Clear all items from "'+active+'"?')) return;
         builds[active].towers = {};
         builds[active].pedals = {};
+        builds[active].gems   = {};
         saveBuilds();
         render();
     };
