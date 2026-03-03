@@ -366,7 +366,7 @@
         for(const [name, need] of oneShotEntries){
             const got = res.picked.oneshotTowers?.[name] || 0;
             const imgUrl = SECRET_SET.has(name) ? SECRET_IMG(toSnake(name)) : TOWER_IMG(toSnake(name));
-            const tag = SECRET_SET.has(name) ? "S" : "1";
+            const tag = SECRET_SET.has(name) ? "Sec" : "1S";;
 
             addBtn({
                 imgUrl,
@@ -463,8 +463,16 @@
             btn.title = `${g} remaining: ${remaining}\nLeft: picked +1 | Right: picked -1`;
 
             const img = document.createElement("img");
+            img.loading = "lazy";
+            img.alt = g;
             img.src = BASIC_IMG(g[0]);
+            img.onerror = () => img.remove();
             btn.appendChild(img);
+
+            const t=document.createElement("div");
+            t.className="quickTag";
+            t.textContent=g;
+            btn.appendChild(t);
 
             const c = document.createElement("div");
             c.className = "quickCount";
@@ -548,7 +556,12 @@
             const isSecret = SECRET_SET.has(towerName);
             const got = res.picked.oneshotTowers?.[towerName] || 0;
             const done = isSecret ? (got >= need) : isAllGemsDone;
-            const imgUrl = isSecret ? SECRET_IMG(toSnake(towerName)) : TOWER_IMG(toSnake(towerName));
+            let imgUrl;
+            if (/^E[1-5]$/.test(towerName)) {
+                imgUrl = BASIC_IMG("E");
+            } else {
+                imgUrl = isSecret ? SECRET_IMG(toSnake(towerName)) : TOWER_IMG(toSnake(towerName));
+            }
             planBar.appendChild(makeIconBtn(imgUrl, towerName, need, done));
         }
 
