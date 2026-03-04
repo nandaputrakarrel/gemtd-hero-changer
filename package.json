@@ -4,12 +4,19 @@
   "description": "Backend to pick hero for Dota 2 GemTD",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "electron": "electron electron.js",
+    "electron-dev": "nodemon --exec \"electron electron.js\" --watch index.js --watch views",
     "vercel-build": "npm run build",
     "build": "echo 'No build step required'"
   },
   "author": "Gravity",
   "license": "ISC",
+  "devDependencies": {
+    "active-win": "^8.0.0",
+    "electron": "^34.0.0"
+  },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
     "@vercel/node": "^5.0.2",

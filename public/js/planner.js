@@ -64,6 +64,7 @@
         builds = obj.builds;
         active = obj.active && builds[obj.active] ? obj.active : Object.keys(builds)[0];
         setActiveBuildName(active);
+        ensureOneBuild(); // migrate missing fields
         saveBuilds();
         render();
     }
@@ -73,13 +74,20 @@
 
     function ensureOneBuild(){
         if(Object.keys(builds).length === 0){
-            builds["default"] = { towers:{}, pedals:{} };
+            builds["default"] = { towers:{}, pedals:{}, gems:{} };
             active = "default";
             setActiveBuildName(active);
             saveBuilds();
         } else if(!builds[active]){
             active = Object.keys(builds)[0];
             setActiveBuildName(active);
+        }
+        // migrate old builds missing fields
+        for (const k of Object.keys(builds)) {
+            if (!builds[k] || typeof builds[k] !== "object") builds[k] = { towers:{}, pedals:{}, gems:{} };
+            if (!builds[k].towers) builds[k].towers = {};
+            if (!builds[k].pedals) builds[k].pedals = {};
+            if (!builds[k].gems)   builds[k].gems = {};
         }
     }
     ensureOneBuild();
@@ -153,6 +161,7 @@
     }
 
     function render(){
+        ensureOneBuild();
         renderBuildSelect();
 
         els.current.innerHTML="";
@@ -179,7 +188,7 @@
         if(els.current.children.length===0){
             const d=document.createElement("div");
             d.className="tile";
-            d.innerHTML='<div class="name">Empty</div><div class="meta">Click towers/pedals below to add them.</div>';
+            d.innerHTML='<div class="name">Empty</div><div class="meta">Click towers/pedals/gems below to add them.</div>';
             els.current.appendChild(d);
         }
 
@@ -213,6 +222,7 @@
             const count = b.pedals[key]||0;
             els.pedals.appendChild(makeTile(key, "Sparkling Pedal", img, count, (rc)=>adjust(b.pedals,key, rc?-1:+1)));
         }
+
     }
 
     els.buildSelect.onchange = () => {
@@ -225,7 +235,7 @@
         const name = (els.buildName.value||"").trim();
         if(!name) return alert("Enter a build name.");
         if(builds[name]) return alert("Build already exists.");
-        builds[name] = { towers:{}, pedals:{} };
+        builds[name] = { towers:{}, pedals:{}, gems:{} };
         active = name;
         setActiveBuildName(active);
         saveBuilds();
@@ -261,6 +271,7 @@
         if(!confirm('Clear all items from "'+active+'"?')) return;
         builds[active].towers = {};
         builds[active].pedals = {};
+        builds[active].gems   = {};
         saveBuilds();
         render();
     };

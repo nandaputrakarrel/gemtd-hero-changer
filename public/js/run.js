@@ -205,6 +205,7 @@
 
         const plannedTowers = {...(b.towers||{})};
         const plannedPedals = {...(b.pedals||{})};
+        const plannedGems   = {...(b.gems||{})};
 
         const lockedGems = computeLockedGems(p);
 
@@ -216,6 +217,14 @@
             if(info?.type==="secret") continue;
             const exp = bestExpansionForOne(towerName).counts;
             addCounts(baseNeedGems, exp, count);
+        }
+
+        // add explicit planned base gems (from planner)
+        for (const [g, cnt] of Object.entries(plannedGems)) {
+            const n = cnt || 0;
+            if (n <= 0) continue;
+            if (!BASE_GEMS.includes(g)) continue;
+            baseNeedGems[g] += n;
         }
 
         const needOneShotTowers = {};
@@ -520,6 +529,26 @@
             img.alt = key;
             img.src = imgUrl;
             img.onerror = () => { img.remove(); chip.textContent = baseName.slice(0,6); };
+            chip.appendChild(img);
+            const badge = document.createElement("div");
+            badge.className = "badge";
+            badge.textContent = "x" + count;
+            chip.appendChild(badge);
+            planIcons.appendChild(chip);
+        }
+
+        const plannedGems = builds[active].gems || {};
+        for (const [g, count] of Object.entries(plannedGems).sort((a,b)=>a[0].localeCompare(b[0]))) {
+            if ((count||0) <= 0) continue;
+            const got = (res.picked.gems && res.picked.gems[g]) ? res.picked.gems[g] : 0;
+            const done = got >= (count || 0);
+            const chip = document.createElement("div");
+            chip.className = "iconChip" + (done ? " done" : "");
+            const img = document.createElement("img");
+            img.loading = "lazy";
+            img.alt = g;
+            img.src = BASIC_IMG(g[0]);
+            img.onerror = () => { img.remove(); chip.textContent = g; };
             chip.appendChild(img);
             const badge = document.createElement("div");
             badge.className = "badge";
